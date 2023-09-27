@@ -1,13 +1,24 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, NativeModules} from 'react-native';
+import React, { useEffect } from 'react'
+import { SafeAreaView, NativeModules } from 'react-native'
+import MyView from './src/MyView'
 
 function App(): JSX.Element {
-  const {ProgressBarNotification} = NativeModules;
+  const { ProgressBarNotification } = NativeModules
   useEffect(() => {
-    ProgressBarNotification.add(5, 20, (res: number) => console.log(res));
-  }, [ProgressBarNotification]);
+    ProgressBarNotification.showProgressNotification(
+      20,
+      'Test in progress',
+      'Test in progress',
+      100,
+      60
+    )
+  }, [])
 
-  return <SafeAreaView></SafeAreaView>;
+  return (
+    <SafeAreaView>
+      <MyView />
+    </SafeAreaView>
+  )
 }
 
-export default App;
+export default App
