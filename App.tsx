@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, NativeModules } from 'react-native'
 import MyView from './src/MyView'
-import BackgroundTimer from 'react-native-background-timer'
+import { RNNotification } from './packages/RNNotification'
 
 function App(): JSX.Element {
-  const { BackgroundNotificationService } = NativeModules
   const [count, setCount] = useState<number>(0)
+
   useEffect(() => {
-    // setTimeout(() => {
-    //   ProgressBarNotification.showProgressNotification(
-    //     20,
-    //     'Test Done',
-    //     'Test is done',
-    //     100,
-    //     60,
-    //     false
-    //   )
-    // }, 5000)
-    const timer = BackgroundTimer.setInterval(() => {
-      setCount(count + 1)
-    }, 1000)
-    BackgroundNotificationService.startBackgroundService({
-      max: '100',
-      current: String(count),
+    RNNotification.showNotification({
+      channelID: '123',
+      notificationID: 55,
+      title: 'Test',
+      content: 'Tested',
     })
-    return () => BackgroundTimer.clearInterval(timer)
-  }, [count])
+    RNNotification.showNotification({
+      channelID: '123',
+      notificationID: 505,
+      title: 'Test',
+      content: 'Tested',
+      isProgress: true,
+      indeterminate: true,
+      onGoing: true,
+    })
+    setTimeout(() => {
+      RNNotification.cancelAllNotification()
+    }, 5000)
+  }, [])
 
   return (
     <SafeAreaView>
